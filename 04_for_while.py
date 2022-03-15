@@ -40,11 +40,11 @@ print()
     
 for i in range(0,51,5):
     print(i, end=' ')
-print()
+print()      # 0 5 10 15 20 25 30 35 40 45 50 
 
 for i in range(10,0,-1):
     print(i, end=' ')
-print()
+print()      # 10 9 8 7 6 5 4 3 2 1
 
 
 #for 문을 사용하여 리스트(colors)의 모든 내용을 출력하시오. (단, range()를 이용하지 않는다.)
@@ -57,7 +57,7 @@ for i in colors:
 a = [1,3,4,5,6,7,8,9,10,11,12,13]
 for i in a:
     if i % 2 == 0:
-        print(i, end=' ')
+        print(i, end=' ')    # 4 6 8 10 12 
         
         
 #구구단 출력1
