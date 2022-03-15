@@ -46,3 +46,140 @@ Inheritance(상속) : 기존 클래스의 속성을 물려 받아 새로운 클�
  - 다중 클래스도 상속 가능 ","로 구분   ex)  class sample_sub(sample_super1, sample_super2):
 '''
 
+class A:
+  a = 1
+  def print_a():
+      print("A class")
+      
+class B:
+  b = 1
+  def print_b():
+      print("B class")
+      
+class C(A):    # A 클래스 상속
+  c = 1
+  def print_c():
+      print("C class")
+      
+class D(C,B):
+  d = 1
+  def print_d():
+      print("D class")
+
+      
+'''
+Method Overriding : 기존 클래스 메서드를 상속 클래스에서 재 정의 하는 것
+ - 재정의하지 않은 메서드는 기존 클래스의 것을 그대로 사용
+ - 오버라이딩한 경우 기존 클래스의 메서드를 사용하고자 하는 경우 'super()' 사용
+'''
+
+class A():
+  def __init__(self):
+      print("this is [A] class and [__init__] fuction")
+      self.var1 = 0
+      self.var2 = 0
+      
+class B(A):
+  def __init__(self):
+      super().__init__()
+      print("this is [B] class and [__init__] function")
+      self.var3 = 0
+      self.var4 = 0
+      
+a = A()
+b = B()
+
+
+'''
+Operator Overloading : 내장된 특수 메소드를 호출하여 객체에 맞는 방법으로 사용가능하게 함
+  - 해당 메서드를 override 하는 것으로 기능을 변경
+  - ex) a + b 는 자동으로 a.__add__(b)를 호출함
+'''
+class BankAccount:
+    def __init__(self, balance=0, name='none'):
+        self.balance = balance
+        self.name = name
+        
+    def deposit(self, amount):
+        self.balance += amount
+        
+    def __add__(self, amount):
+        self.deposit(amount)
+        
+    def __iadd__(self, amount):
+        self.deposit(amount)
+        
+a = BankAcount(1000, "kim")
+print(a.balance)    # 1000
+
+a + 1000    # a.__add__(1000)와 같음
+print(a.balance)    # 2000
+
+
+
+'''
+Iterator : iterable* 가능한 객체로 만들어 주는것
+*iterable : 리스트와 같이 한개씩 꺼내어 쓸수 있는 형태로 for문에서 in 다음에 입력하여 사용이 가능
+  - iterable 가능한 객체는 '__iter__()' 메서드를 가지도 있음
+'''
+class PowTwo:
+    """Class to impliment an iterator of powers of two"""
+    
+    def __init__(self, start=0)
+        self.start = start
+      
+    def __iter__(self):
+        return self
+      
+    def __next__(self):
+        result = 2 ** self.start
+        self.start += 1
+        return result
+      
+a = PowTwo(3)
+myiter = iter(a)
+print(next(myiter))   # 8
+print(next(myiter))   # 16
+print(next(myiter))   # 32
+
+
+'''
+Generator
+'''
+
+      
+# 은행 계좌 클래스 만들기
+class BankAccount:
+  def __init__(self, balance=0, name='none'):
+    self.balance = balance
+    self.name = name
+    
+  def withdraw(self, amount):
+    if self.balance >= amount:
+       self. balance -= amount
+    else:
+      print('잔액부족')
+      
+  def deposit(self, amount):
+    self.balance += amount
+    
+  def get_info(self):
+    print('이름: ', self.name)
+    print('잔고: ', self.balance)
+    
+    
+# 최소 잔액을 유지하는 계좌 클래스 만들기 (상속 이용)
+class MinimumBalanceAccount(BankAccount):
+    def __init__(self, balance=0, name='none', min_bal=0):
+        self.balance = balance
+        self.name = name
+        self.min_bal = min_bal
+    
+    def withdraw(self, amount):
+      if self.balance - amount < self.min_bal:
+         print('최소 잔액을 유지해야합니다.')
+      else:
+         super().withdraw(amount)        # 상속받은 클래스 내 함수 그대로 사용
+          
+a = MinimumBalanceAccount(1000, "kim", 500)
+a.withdraw(100)
