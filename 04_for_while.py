@@ -1,3 +1,39 @@
+# while문 : 조건이 True인 동안 A를 반복 수행
+number = 1
+while number <= 5 :
+    print (number)
+    number = number + 1
+
+
+# range(start, stop, step)
+range(5, 10)   # [5, 6, 7, 8, 9]
+range(1,7,2)   # [1, 3, 5]
+
+
+
+# for문 : 순서열을 순회하다가 순서열의 끝에 도달하면 반복을 종료
+for 반복변수 in 순서열:
+    반복할 문장
+
+    
+    
+# break : 반복문 순회 도중 break 문을 만나면 내부 블록 벗어남
+for i in range(1, 11):
+    if i > 5:
+        break
+    print(i)
+
+    
+    
+# continue : 반복문 순회 도중 continue 문을 만나면 그 아래의 문장은 해당 반복에 한해서 건너뜀
+for i in range(1, 11):
+    if i % 2 == 0:
+        continue
+    print(i)
+
+    
+    
+
 #단어(문자열)가 주어질 때, 아래와 같이 출력되도록 작성하시오.
 #while문을 이용하여 작성(문자열)
 word = "Python"
