@@ -145,7 +145,36 @@ print(next(myiter))   # 32
 
 '''
 Generator
+“yield”를 사용하여 데이터를 하나씩 반환하는 함수
+  - 이터레이터와 같은 동작수행, 하지만 보다 간단
+  - 함수객체 생성시 __iter__() 와 __next()__ 메서드 자동생성
+  - 일반적인 함수처럼 작성되지만 값을 반환하고 싶을 때마다 ”yield”문을 사용
+  - 마지막 반환 결과를 기억, 재호출시 그 위치부터 다시 시작
+  - 데이터가 대량일 경우 일부씩 처리시 유용
+  - On demand 계산을 하나씩 처리하고 싶은 경우
 '''
+def gen():
+    for i in range(5):
+        yield i 
+g = gen()
+print(next(g))    #0
+print(next(g))    #1
+print(next(g))    #2
+
+
+def square_numbers(nums):
+    for x in nums:
+        yield x * x
+        
+numbers = range(1000000000000)
+g = square_numbers(numbers)
+
+print(next(g))    # 0
+print(next(g))    # 1
+print(next(g))    # 4
+print(next(g))    # 9
+
+
 
       
 # 은행 계좌 클래스 만들기
@@ -183,3 +212,109 @@ class MinimumBalanceAccount(BankAccount):
           
 a = MinimumBalanceAccount(1000, "kim", 500)
 a.withdraw(100)
+
+
+
+# Operator Overriding 예제
+class Set:
+    def __init__(self, L):
+        self.L=[]
+        for i in range(len(L)):
+            flag=True
+            for j in range(i):
+                if L[i] == L[j]:
+                    flag=False
+            if flag:
+                self.L.append(L[i])
+        
+    def add(self, elem):
+        if elem not in self.L:
+            self.L.append(elem)
+        else:
+            pass
+    
+    def discard(self, elem):
+        if elem in self.L:
+            self.L.remove(elem)
+            
+    def clear(self):
+        self.L = []
+        
+    def __len__(self):
+        return len(self.L)
+    
+    def __str__(self):
+        return "{" + str(self.L)[1:-1] + "}"
+    
+    def __contains__(self, elem):
+        result = True
+        if elem in self.L:
+            pass
+        else:
+            result = False
+        return result
+        
+    def __le__(self, other): # other=Set()
+        result = True
+        for x in self.L:
+            if x in other.L:
+                pass
+            else:
+                result = False
+        return result
+        
+    
+    def __ge__(self, other): # other=Set()
+        result = True
+        for x in other.L:
+            if x in self.L:
+                pass
+            else:
+                result = False
+        return result     
+    
+    def __or__(self, other): # other=Set()
+        result = self.L[:]
+        for i in other.L:
+            if i not in result:
+                result.append(i)
+        r = Set(result)
+        return r
+    
+    def __and__(self, other): # other=Set()
+        result = []
+        for i in other.L:
+            if i in self.L:
+                result.append(i)        
+        r = Set(result)
+        return r
+    
+    def __sub__(self, other): # other=Set()
+        result = []
+        for i in self.L:
+            if i not in other.L:
+                result.append(i)        
+        r = Set(result)
+        return r 
+    
+    def __ior__(self, other): # other=Set()
+        for i in other.L:
+            if i not in self.L:
+                self.L.append(i)
+        return self
+    
+    def __iand__(self, other): # other=Set()
+        result = []
+        for i in other.L:
+            if i in self.L:
+                result.append(i)     
+        self.L = result[:]
+        return self
+    
+    def __isub__(self, other): # other=Set()
+        result = []
+        for i in self.L:
+            if i not in other.L:
+                result.append(i)  
+        self.L = result[:]
+        return self
